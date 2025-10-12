@@ -1,4 +1,4 @@
-package io.unmi.appa
+package io.unmi.app
 
 import android.os.Bundle
 import android.view.Menu
@@ -12,7 +12,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.appcompat.app.AppCompatActivity
-import io.unmi.app.R
 import io.unmi.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
