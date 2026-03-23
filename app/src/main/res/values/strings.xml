@@ -1,25 +1,285 @@
 <resources>
-    <string name="app_name">unmi</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="nav_header_title">Android Studio</string>
-    <string name="nav_header_subtitle">android.studio@android.com</string>
-    <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="app_name">Unmi</string>
+    <string name="app_subtitle">域名资产管理</string>
 
-    <string name="menu_transform">Domain List</string>
-    <string name="menu_reflow">Statistics</string>
-    <string name="menu_slideshow">My</string>
-    <string name="menu_settings">Settings</string>
+    <!-- Auth / Unlock -->
+    <string name="auth_login">登录</string>
+    <string name="auth_password">密码</string>
+    <string name="auth_enter_password">输入密码</string>
+    <string name="auth_create_account">创建新账户</string>
+    <string name="auth_create_account_title">创建账户</string>
+    <string name="auth_username_optional">用户名（可选）</string>
+    <string name="auth_set_password">设置密码</string>
+    <string name="auth_confirm_password">确认密码</string>
+    <string name="auth_has_account">已有账户？返回登录</string>
+    <string name="auth_password_hint">密码即账户，每个密码对应独立的加密空间</string>
+    <string name="auth_create_hint">每个密码创建独立的加密数据空间</string>
+    <string name="auth_password_warning">密码不少于 6 位，请牢记密码\n忘记密码将无法恢复数据</string>
+    <string name="auth_error_short_password">密码长度不少于6位</string>
+    <string name="auth_error_mismatch">两次输入的密码不一致</string>
+    <string name="auth_error_wrong_password">密码错误</string>
+    <string name="auth_error_too_many">尝试次数过多，请稍后再试</string>
+    <string name="auth_error_duplicate">该密码已被使用</string>
+    <string name="auth_error_empty">请输入密码</string>
 
-    <string name="lorem_ipsum_title">Lorem Ipsum"</string>
-    <string name="lorem_ipsum">Lorem Ipsum is simply placeholder text of the printing and
-        typesetting industry. Lorem Ipsum has been the industry\'s standard placeholder text ever
-        since the 1500s, when an unknown printer took a galley of type and scrambled it to make a
-        type specimen book"
-    </string>
-    <string name="fab_content_description">Represents a view to invoke an action</string>
-    <string name="image_view_item_transform_content_description">Represents an image view in the
-        item
-    </string>
+    <!-- Init -->
+    <string name="init_welcome">欢迎使用 Unmi</string>
+    <string name="init_subtitle">本地域名资产管理系统</string>
+    <string name="init_security_title">安全说明</string>
+    <string name="init_security_desc">• 所有数据加密存储在本地设备中\n• 主口令不会以明文形式保存\n• 云端仅保存加密后的数据\n• 请牢记您的主口令，忘记将无法恢复数据</string>
+    <string name="init_set_password">设置主口令</string>
+    <string name="init_enter_password">输入主口令</string>
+    <string name="init_confirm_password">确认主口令</string>
+    <string name="init_password_tip">主口令不少于6位，建议包含字母和数字</string>
+    <string name="init_start">开始使用</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">首页</string>
+
+    <!-- Home -->
+    <string name="home_overview">资产概览</string>
+    <string name="home_total_domains">域名总数</string>
+    <string name="home_expiring_soon">即将到期</string>
+    <string name="home_monthly_renew">月度续费</string>
+    <string name="home_yearly_renew">年度续费</string>
+    <string name="home_expiry_alert">30 天内有 %d 个域名即将到期</string>
+    <string name="home_expiry_alert_7d">其中 %d 个将在 7 天内到期</string>
+    <string name="home_recent">最近添加</string>
+    <string name="home_view_all">查看全部</string>
+    <string name="home_empty_title">还没有域名数据</string>
+    <string name="home_empty_subtitle">添加您的第一个域名开始管理</string>
+    <string name="home_add_domain">添加域名</string>
+
+    <!-- Domain List -->
+    <string name="domain_list_title">域名</string>
+    <string name="domain_list_search">搜索域名</string>
+    <string name="domain_list_filter">筛选</string>
+    <string name="domain_list_filter_title">筛选条件</string>
+    <string name="domain_list_filter_registrar">注册商</string>
+    <string name="domain_list_filter_status">状态</string>
+    <string name="domain_list_all">全部</string>
+    <string name="domain_list_active">活跃</string>
+    <string name="domain_list_expired">已过期</string>
+    <string name="domain_list_transferred">已转移</string>
+    <string name="domain_list_empty">暂无域名</string>
+    <string name="domain_list_no_match">未找到匹配域名</string>
+    <string name="domain_list_selected">已选择 %d 项</string>
+    <string name="domain_list_clear">清除</string>
+    <string name="domain_list_add">添加域名</string>
+
+    <!-- Domain Detail -->
+    <string name="detail_title">域名详情</string>
+    <string name="detail_not_found">域名不存在</string>
+    <string name="detail_basic_info">基础信息</string>
+    <string name="detail_registrar">注册商</string>
+    <string name="detail_register_date">注册日期</string>
+    <string name="detail_suffix">后缀</string>
+    <string name="detail_auto_renew">自动续费</string>
+    <string name="detail_dns_provider">DNS 服务商</string>
+    <string name="detail_privacy">隐私保护</string>
+    <string name="detail_usage">用途</string>
+    <string name="detail_cost_info">费用信息</string>
+    <string name="detail_purchase_price">购买价格</string>
+    <string name="detail_renew_price">续费价格</string>
+    <string name="detail_hold_cost">累计持有成本</string>
+    <string name="detail_valuation">域名估值</string>
+    <string name="detail_grade">等级 %s</string>
+    <string name="detail_confidence">置信度: %s</string>
+    <string name="detail_tags">标签</string>
+    <string name="detail_note">备注</string>
+    <string name="detail_renewal_records">续费记录</string>
+    <string name="detail_no_records">暂无续费记录</string>
+    <string name="detail_delete_title">删除域名</string>
+    <string name="detail_delete_message">确定要删除该域名吗？此操作不可恢复。</string>
+    <string name="detail_days_remaining">%d天</string>
+    <string name="detail_days_expired">已过期</string>
+    <string name="detail_today_expire">今日到期</string>
+    <string name="detail_yes">是</string>
+    <string name="detail_no">否</string>
+    <string name="detail_enabled">已开启</string>
+    <string name="detail_disabled">未开启</string>
+    <string name="detail_unknown">-</string>
+
+    <!-- Domain Edit -->
+    <string name="edit_add_title">添加域名</string>
+    <string name="edit_edit_title">编辑域名</string>
+    <string name="edit_save">保存</string>
+    <string name="edit_auto_identify">一键识别</string>
+    <string name="edit_identifying">识别中…</string>
+    <string name="edit_identify_title">智能识别</string>
+    <string name="edit_identify_desc">输入域名后点击按钮，自动查询注册信息和市场价格</string>
+    <string name="edit_basic_info">基础信息</string>
+    <string name="edit_domain_name">域名</string>
+    <string name="edit_domain_hint">例如: example.com</string>
+    <string name="edit_suffix">后缀</string>
+    <string name="edit_registrar">注册商</string>
+    <string name="edit_registrar_hint">例如: Cloudflare</string>
+    <string name="edit_status">状态</string>
+    <string name="edit_usage">用途</string>
+    <string name="edit_time_info">时间信息</string>
+    <string name="edit_register_date">注册日期</string>
+    <string name="edit_expire_date">到期日期</string>
+    <string name="edit_date_hint">yyyy-MM-dd</string>
+    <string name="edit_auto_renew">自动续费</string>
+    <string name="edit_cost_info">费用信息</string>
+    <string name="edit_purchase_price">购买价格</string>
+    <string name="edit_renew_price">续费价格</string>
+    <string name="edit_hold_cost">持有成本</string>
+    <string name="edit_currency">货币</string>
+    <string name="edit_check_price">查市场价</string>
+    <string name="edit_price_compare">市场价格对比</string>
+    <string name="edit_price_header">注册 / 续费 / 转入</string>
+    <string name="edit_no_price">暂无价格数据</string>
+    <string name="edit_price_hint">点击注册商可自动填充续费价格</string>
+    <string name="edit_view_prices">查看 %d 个注册商价格对比</string>
+    <string name="edit_evaluate">评估域名价值</string>
+    <string name="edit_re_evaluate">重新估值</string>
+    <string name="edit_extended">扩展信息</string>
+    <string name="edit_dns_provider">DNS 服务商</string>
+    <string name="edit_nameservers">Name Servers</string>
+    <string name="edit_privacy">Whois 隐私保护</string>
+    <string name="edit_note">备注</string>
+    <string name="edit_error_domain">请输入域名</string>
+    <string name="edit_error_full_domain">请先输入完整域名</string>
+    <string name="edit_error_expire">请选择到期日期</string>
+    <string name="edit_error_duplicate">该域名已存在</string>
+    <string name="edit_error_save">保存失败: %s</string>
+    <string name="edit_identifying_info">正在识别域名信息…</string>
+    <string name="edit_fetching_price">正在获取价格…</string>
+    <string name="edit_rdap_failed">RDAP 查询失败: %s</string>
+    <string name="edit_price_failed">获取价格失败: %s</string>
+    <string name="edit_rdap_filled">已自动填充 RDAP 数据</string>
+    <string name="edit_prices_found">找到 %1$d 个注册商价格 (.%2$s)</string>
+    <string name="edit_rdap_ok">RDAP 已填充</string>
+    <string name="edit_n_prices">%d 个价格</string>
+    <string name="edit_query_done">查询完成</string>
+    <string name="edit_error_domain_or_tld">请先输入域名或后缀</string>
+    <string name="edit_price_register">注册</string>
+    <string name="edit_price_renew">续费</string>
+    <string name="edit_price_transfer">转入</string>
+
+    <!-- Statistics -->
+    <string name="stats_title">统计分析</string>
+    <string name="stats_overview">概览</string>
+    <string name="stats_total_domains">域名总数</string>
+    <string name="stats_total_renew_cost">总续费成本</string>
+    <string name="stats_total_hold_cost">总持有成本</string>
+    <string name="stats_total_spent">历史续费支出</string>
+    <string name="stats_total_value">总估值 (USD)</string>
+    <string name="stats_total_purchase">总购买成本</string>
+    <string name="stats_avg_renew">平均续费单价</string>
+    <string name="stats_expiring_30d">即将到期(30天)</string>
+    <string name="stats_renew_budget">续费预算</string>
+    <string name="stats_renew_7d">7天内续费</string>
+    <string name="stats_renew_30d">30天内续费</string>
+    <string name="stats_renew_90d">90天内续费</string>
+    <string name="stats_renew_365d">365天内续费</string>
+    <string name="stats_domains_count">%d个域名</string>
+    <string name="stats_expiry_preview">到期预览</string>
+    <string name="stats_expire_7d">7天内到期</string>
+    <string name="stats_expire_30d">30天内到期</string>
+    <string name="stats_expire_90d">90天内到期</string>
+    <string name="stats_expire_365d">365天内到期</string>
+    <string name="stats_count">%d个</string>
+    <string name="stats_registrar_dist">注册商分布</string>
+    <string name="stats_tld_dist">后缀分布</string>
+
+    <!-- Whois -->
+    <string name="whois_title">Whois 查询 (RDAP)</string>
+    <string name="whois_input">输入域名</string>
+    <string name="whois_input_hint">例如: example.com</string>
+    <string name="whois_query">查询 (ICANN RDAP)</string>
+    <string name="whois_querying">查询中…</string>
+    <string name="whois_result">查询结果</string>
+    <string name="whois_source">数据来源: ICANN RDAP</string>
+    <string name="whois_reg_info">注册信息</string>
+    <string name="whois_registrar">注册商</string>
+    <string name="whois_reg_date">注册日期</string>
+    <string name="whois_exp_date">到期日期</string>
+    <string name="whois_last_changed">最后变更</string>
+    <string name="whois_dnssec">DNSSEC</string>
+    <string name="whois_dnssec_signed">已签名</string>
+    <string name="whois_dnssec_unsigned">未签名</string>
+    <string name="whois_status">域名状态</string>
+    <string name="whois_ns">Name Servers</string>
+    <string name="whois_show_raw">查看原始 RDAP 数据</string>
+    <string name="whois_hide_raw">隐藏原始数据</string>
+    <string name="whois_recent">最近查询</string>
+    <string name="whois_success">成功</string>
+    <string name="whois_failed">失败</string>
+    <string name="whois_unknown">未知</string>
+    <string name="whois_error_empty">请输入域名</string>
+    <string name="whois_error_query">查询失败: %s</string>
+
+    <!-- Tools -->
+    <string name="tools_title">工具</string>
+    <string name="tools_query">域名查询</string>
+    <string name="tools_whois">Whois 查询</string>
+    <string name="tools_whois_desc">查询域名注册信息与状态（RDAP + WHOIS）</string>
+    <string name="tools_data">数据管理</string>
+    <string name="tools_import">导入域名</string>
+    <string name="tools_import_desc">从 Excel / CSV 文件批量导入</string>
+    <string name="tools_export">导出域名</string>
+    <string name="tools_export_desc">导出域名数据为 Excel / CSV</string>
+    <string name="tools_security">安全备份</string>
+    <string name="tools_backup">备份与恢复</string>
+    <string name="tools_backup_desc">本地加密备份和恢复数据</string>
+    <string name="tools_sync">云端同步</string>
+    <string name="tools_sync_desc">同步加密数据到云端</string>
+
+    <!-- Settings -->
+    <string name="settings_title">设置</string>
+    <string name="settings_security">安全设置</string>
+    <string name="settings_change_password">修改主口令</string>
+    <string name="settings_biometric">生物识别解锁</string>
+    <string name="settings_biometric_desc">使用指纹或面部识别快速解锁</string>
+    <string name="settings_display">显示设置</string>
+    <string name="settings_dark_mode">深色模式</string>
+    <string name="settings_currency">默认货币</string>
+    <string name="settings_other">其他</string>
+    <string name="settings_about">关于项目</string>
+    <string name="settings_password_old">当前口令</string>
+    <string name="settings_password_new">新口令</string>
+    <string name="settings_password_confirm">确认新口令</string>
+    <string name="settings_password_success">修改成功</string>
+    <string name="settings_password_wrong">原口令错误</string>
+    <string name="settings_password_short">新口令长度不少于6位</string>
+    <string name="settings_password_mismatch">两次输入不一致</string>
+
+    <!-- About -->
+    <string name="about_title">关于项目</string>
+    <string name="about_description">Unmi 是一个基于 Kotlin + Jetpack Compose 开发的 Android 本地域名管理系统。采用 Local-first 设计，所有数据默认加密存储在本地设备中，支持云端加密备份。</string>
+    <string name="about_security_title">安全机制</string>
+    <string name="about_security_desc">• 密码使用 PBKDF2-SHA256 哈希存储\n• 数据加密密钥从密码派生\n• 敏感字段使用 AES-256-GCM 加密\n• 云端仅保存密文数据\n• 支持应用自动锁定</string>
+    <string name="about_license">开源协议</string>
+    <string name="about_license_value">MIT License</string>
+    <string name="about_tech">技术栈</string>
+    <string name="about_tech_value">Kotlin + Compose + Room + Hilt</string>
+    <string name="about_min_version">最低系统版本</string>
+    <string name="about_min_version_value">Android 8.0 (API 26)</string>
+    <string name="about_footer">Made with Kotlin &amp; Jetpack Compose</string>
+
+    <!-- Sort -->
+    <string name="sort_updated">更新时间</string>
+    <string name="sort_expire">到期时间</string>
+    <string name="sort_name">域名名称</string>
+    <string name="sort_price">续费价格</string>
+
+    <!-- Language -->
+    <string name="settings_language">语言</string>
+    <string name="settings_language_system">跟随系统</string>
+    <string name="settings_language_zh">中文</string>
+    <string name="settings_language_en">English</string>
+
+    <!-- Common -->
+    <string name="action_back">返回</string>
+    <string name="action_cancel">取消</string>
+    <string name="action_confirm">确认</string>
+    <string name="action_delete">删除</string>
+    <string name="action_edit">编辑</string>
+    <string name="action_save">保存</string>
+    <string name="action_search">搜索</string>
+    <string name="action_close">关闭</string>
+    <string name="per_year">/年</string>
+    <string name="version">v%s</string>
 </resources>

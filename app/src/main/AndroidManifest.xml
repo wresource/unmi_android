@@ -2,7 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
     <application
+        android:name=".UnmiApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -11,17 +16,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Unmi"
-        tools:targetApi="31">
+        android:localeConfig="@xml/locales_config"
+        tools:targetApi="34">
         <activity
             android:name=".MainActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:resizeableActivity="true"
-            android:theme="@style/Theme.Unmi.NoActionBar"
+            android:theme="@style/Theme.Unmi"
             tools:targetApi="24">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

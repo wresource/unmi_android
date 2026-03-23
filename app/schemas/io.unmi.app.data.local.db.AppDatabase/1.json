@@ -1,0 +1,499 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 1,
+    "identityHash": "7fe4da5fbd926dba47d76a8b6cf6e6a4",
+    "entities": [
+      {
+        "tableName": "domains",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `domainName` TEXT NOT NULL, `tld` TEXT NOT NULL, `registrar` TEXT, `registerDate` TEXT, `expireDate` TEXT NOT NULL, `autoRenew` INTEGER NOT NULL, `status` TEXT NOT NULL, `purchasePrice` REAL NOT NULL, `renewPrice` REAL NOT NULL, `holdCost` REAL NOT NULL, `currency` TEXT NOT NULL, `dnsProvider` TEXT, `privacyProtection` INTEGER NOT NULL, `usageType` TEXT, `note` TEXT, `encryptedPayload` TEXT, `createdAt` TEXT NOT NULL, `updatedAt` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "domainName",
+            "columnName": "domainName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tld",
+            "columnName": "tld",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "registrar",
+            "columnName": "registrar",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "registerDate",
+            "columnName": "registerDate",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "expireDate",
+            "columnName": "expireDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "autoRenew",
+            "columnName": "autoRenew",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "status",
+            "columnName": "status",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "purchasePrice",
+            "columnName": "purchasePrice",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "renewPrice",
+            "columnName": "renewPrice",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "holdCost",
+            "columnName": "holdCost",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currency",
+            "columnName": "currency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "dnsProvider",
+            "columnName": "dnsProvider",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "privacyProtection",
+            "columnName": "privacyProtection",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "usageType",
+            "columnName": "usageType",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "encryptedPayload",
+            "columnName": "encryptedPayload",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_domains_domainName",
+            "unique": true,
+            "columnNames": [
+              "domainName"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_domains_domainName` ON `${TABLE_NAME}` (`domainName`)"
+          },
+          {
+            "name": "index_domains_expireDate",
+            "unique": false,
+            "columnNames": [
+              "expireDate"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_domains_expireDate` ON `${TABLE_NAME}` (`expireDate`)"
+          },
+          {
+            "name": "index_domains_registrar",
+            "unique": false,
+            "columnNames": [
+              "registrar"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_domains_registrar` ON `${TABLE_NAME}` (`registrar`)"
+          },
+          {
+            "name": "index_domains_status",
+            "unique": false,
+            "columnNames": [
+              "status"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_domains_status` ON `${TABLE_NAME}` (`status`)"
+          },
+          {
+            "name": "index_domains_updatedAt",
+            "unique": false,
+            "columnNames": [
+              "updatedAt"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_domains_updatedAt` ON `${TABLE_NAME}` (`updatedAt`)"
+          }
+        ]
+      },
+      {
+        "tableName": "renewal_records",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `domainId` INTEGER NOT NULL, `renewalDate` TEXT NOT NULL, `renewalYears` INTEGER NOT NULL, `renewalPrice` REAL NOT NULL, `currency` TEXT NOT NULL, `note` TEXT, `createdAt` TEXT NOT NULL, FOREIGN KEY(`domainId`) REFERENCES `domains`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "domainId",
+            "columnName": "domainId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "renewalDate",
+            "columnName": "renewalDate",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "renewalYears",
+            "columnName": "renewalYears",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "renewalPrice",
+            "columnName": "renewalPrice",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "currency",
+            "columnName": "currency",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_renewal_records_domainId",
+            "unique": false,
+            "columnNames": [
+              "domainId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_renewal_records_domainId` ON `${TABLE_NAME}` (`domainId`)"
+          },
+          {
+            "name": "index_renewal_records_renewalDate",
+            "unique": false,
+            "columnNames": [
+              "renewalDate"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_renewal_records_renewalDate` ON `${TABLE_NAME}` (`renewalDate`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "domains",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "domainId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "sync_backup_logs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `syncType` TEXT NOT NULL, `syncStatus` TEXT NOT NULL, `versionNo` TEXT, `syncTime` TEXT NOT NULL, `remoteProvider` TEXT, `fileHash` TEXT, `remark` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "syncType",
+            "columnName": "syncType",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "syncStatus",
+            "columnName": "syncStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "versionNo",
+            "columnName": "versionNo",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "syncTime",
+            "columnName": "syncTime",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "remoteProvider",
+            "columnName": "remoteProvider",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "fileHash",
+            "columnName": "fileHash",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "remark",
+            "columnName": "remark",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      },
+      {
+        "tableName": "tags",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `color` TEXT, `createdAt` TEXT NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "color",
+            "columnName": "color",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_tags_name",
+            "unique": true,
+            "columnNames": [
+              "name"
+            ],
+            "orders": [],
+            "createSql": "CREATE UNIQUE INDEX IF NOT EXISTS `index_tags_name` ON `${TABLE_NAME}` (`name`)"
+          }
+        ]
+      },
+      {
+        "tableName": "domain_tag_cross_ref",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`domainId` INTEGER NOT NULL, `tagId` INTEGER NOT NULL, PRIMARY KEY(`domainId`, `tagId`), FOREIGN KEY(`domainId`) REFERENCES `domains`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE , FOREIGN KEY(`tagId`) REFERENCES `tags`(`id`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "domainId",
+            "columnName": "domainId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tagId",
+            "columnName": "tagId",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "domainId",
+            "tagId"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_domain_tag_cross_ref_domainId",
+            "unique": false,
+            "columnNames": [
+              "domainId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_domain_tag_cross_ref_domainId` ON `${TABLE_NAME}` (`domainId`)"
+          },
+          {
+            "name": "index_domain_tag_cross_ref_tagId",
+            "unique": false,
+            "columnNames": [
+              "tagId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_domain_tag_cross_ref_tagId` ON `${TABLE_NAME}` (`tagId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "domains",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "domainId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          },
+          {
+            "table": "tags",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "tagId"
+            ],
+            "referencedColumns": [
+              "id"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "whois_query_logs",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `domainName` TEXT NOT NULL, `queryStatus` TEXT NOT NULL, `provider` TEXT, `rawText` TEXT, `parsedResultJson` TEXT, `queriedAt` TEXT NOT NULL, `errorMessage` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "domainName",
+            "columnName": "domainName",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "queryStatus",
+            "columnName": "queryStatus",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "provider",
+            "columnName": "provider",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "rawText",
+            "columnName": "rawText",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "parsedResultJson",
+            "columnName": "parsedResultJson",
+            "affinity": "TEXT"
+          },
+          {
+            "fieldPath": "queriedAt",
+            "columnName": "queriedAt",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "errorMessage",
+            "columnName": "errorMessage",
+            "affinity": "TEXT"
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        }
+      }
+    ],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '7fe4da5fbd926dba47d76a8b6cf6e6a4')"
+    ]
+  }
+}

@@ -1,0 +1,285 @@
+<resources>
+    <string name="app_name">Unmi</string>
+    <string name="app_subtitle">Domain Asset Manager</string>
+
+    <!-- Auth / Unlock -->
+    <string name="auth_login">Log in</string>
+    <string name="auth_password">Password</string>
+    <string name="auth_enter_password">Enter password</string>
+    <string name="auth_create_account">Create account</string>
+    <string name="auth_create_account_title">Create account</string>
+    <string name="auth_username_optional">Username (optional)</string>
+    <string name="auth_set_password">Set password</string>
+    <string name="auth_confirm_password">Confirm password</string>
+    <string name="auth_has_account">Have an account? Log in</string>
+    <string name="auth_password_hint">Password is your identity. Each password has its own encrypted space.</string>
+    <string name="auth_create_hint">Each password creates an isolated encrypted data space</string>
+    <string name="auth_password_warning">Password must be at least 6 characters.\nPlease remember it — data cannot be recovered without it.</string>
+    <string name="auth_error_short_password">Password must be at least 6 characters</string>
+    <string name="auth_error_mismatch">Passwords do not match</string>
+    <string name="auth_error_wrong_password">Incorrect password</string>
+    <string name="auth_error_too_many">Too many attempts. Please try again later.</string>
+    <string name="auth_error_duplicate">This password is already in use</string>
+    <string name="auth_error_empty">Please enter a password</string>
+
+    <!-- Init -->
+    <string name="init_welcome">Welcome to Unmi</string>
+    <string name="init_subtitle">Local domain asset management</string>
+    <string name="init_security_title">Security notice</string>
+    <string name="init_security_desc">• All data is encrypted and stored locally\n• Master password is never stored in plain text\n• Only encrypted data is synced to the cloud\n• Please remember your password — data cannot be recovered</string>
+    <string name="init_set_password">Set master password</string>
+    <string name="init_enter_password">Enter master password</string>
+    <string name="init_confirm_password">Confirm master password</string>
+    <string name="init_password_tip">At least 6 characters, letters and numbers recommended</string>
+    <string name="init_start">Get started</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Home</string>
+
+    <!-- Home -->
+    <string name="home_overview">Overview</string>
+    <string name="home_total_domains">Total domains</string>
+    <string name="home_expiring_soon">Expiring soon</string>
+    <string name="home_monthly_renew">Monthly renewal</string>
+    <string name="home_yearly_renew">Annual renewal</string>
+    <string name="home_expiry_alert">%d domains expiring within 30 days</string>
+    <string name="home_expiry_alert_7d">%d of them expire within 7 days</string>
+    <string name="home_recent">Recently added</string>
+    <string name="home_view_all">View all</string>
+    <string name="home_empty_title">No domains yet</string>
+    <string name="home_empty_subtitle">Add your first domain to get started</string>
+    <string name="home_add_domain">Add domain</string>
+
+    <!-- Domain List -->
+    <string name="domain_list_title">Domains</string>
+    <string name="domain_list_search">Search domains</string>
+    <string name="domain_list_filter">Filter</string>
+    <string name="domain_list_filter_title">Filters</string>
+    <string name="domain_list_filter_registrar">Registrar</string>
+    <string name="domain_list_filter_status">Status</string>
+    <string name="domain_list_all">All</string>
+    <string name="domain_list_active">Active</string>
+    <string name="domain_list_expired">Expired</string>
+    <string name="domain_list_transferred">Transferred</string>
+    <string name="domain_list_empty">No domains</string>
+    <string name="domain_list_no_match">No matching domains</string>
+    <string name="domain_list_selected">%d selected</string>
+    <string name="domain_list_clear">Clear</string>
+    <string name="domain_list_add">Add domain</string>
+
+    <!-- Domain Detail -->
+    <string name="detail_title">Domain details</string>
+    <string name="detail_not_found">Domain not found</string>
+    <string name="detail_basic_info">Basic info</string>
+    <string name="detail_registrar">Registrar</string>
+    <string name="detail_register_date">Registration date</string>
+    <string name="detail_suffix">TLD</string>
+    <string name="detail_auto_renew">Auto-renew</string>
+    <string name="detail_dns_provider">DNS provider</string>
+    <string name="detail_privacy">Privacy protection</string>
+    <string name="detail_usage">Usage</string>
+    <string name="detail_cost_info">Cost info</string>
+    <string name="detail_purchase_price">Purchase price</string>
+    <string name="detail_renew_price">Renewal price</string>
+    <string name="detail_hold_cost">Total hold cost</string>
+    <string name="detail_valuation">Valuation</string>
+    <string name="detail_grade">Grade %s</string>
+    <string name="detail_confidence">Confidence: %s</string>
+    <string name="detail_tags">Tags</string>
+    <string name="detail_note">Notes</string>
+    <string name="detail_renewal_records">Renewal records</string>
+    <string name="detail_no_records">No renewal records</string>
+    <string name="detail_delete_title">Delete domain</string>
+    <string name="detail_delete_message">Are you sure? This cannot be undone.</string>
+    <string name="detail_days_remaining">%d days</string>
+    <string name="detail_days_expired">Expired</string>
+    <string name="detail_today_expire">Expires today</string>
+    <string name="detail_yes">Yes</string>
+    <string name="detail_no">No</string>
+    <string name="detail_enabled">Enabled</string>
+    <string name="detail_disabled">Disabled</string>
+    <string name="detail_unknown">-</string>
+
+    <!-- Domain Edit -->
+    <string name="edit_add_title">Add domain</string>
+    <string name="edit_edit_title">Edit domain</string>
+    <string name="edit_save">Save</string>
+    <string name="edit_auto_identify">Auto identify</string>
+    <string name="edit_identifying">Identifying…</string>
+    <string name="edit_identify_title">Smart identify</string>
+    <string name="edit_identify_desc">Enter a domain and tap to auto-fill registration info and pricing</string>
+    <string name="edit_basic_info">Basic info</string>
+    <string name="edit_domain_name">Domain</string>
+    <string name="edit_domain_hint">e.g. example.com</string>
+    <string name="edit_suffix">TLD</string>
+    <string name="edit_registrar">Registrar</string>
+    <string name="edit_registrar_hint">e.g. Cloudflare</string>
+    <string name="edit_status">Status</string>
+    <string name="edit_usage">Usage</string>
+    <string name="edit_time_info">Dates</string>
+    <string name="edit_register_date">Registration date</string>
+    <string name="edit_expire_date">Expiry date</string>
+    <string name="edit_date_hint">yyyy-MM-dd</string>
+    <string name="edit_auto_renew">Auto-renew</string>
+    <string name="edit_cost_info">Cost info</string>
+    <string name="edit_purchase_price">Purchase price</string>
+    <string name="edit_renew_price">Renewal price</string>
+    <string name="edit_hold_cost">Holding cost</string>
+    <string name="edit_currency">Currency</string>
+    <string name="edit_check_price">Check market price</string>
+    <string name="edit_price_compare">Market price comparison</string>
+    <string name="edit_price_header">Register / Renew / Transfer</string>
+    <string name="edit_no_price">No pricing data available</string>
+    <string name="edit_price_hint">Tap a registrar to auto-fill renewal price</string>
+    <string name="edit_view_prices">View %d registrar prices</string>
+    <string name="edit_evaluate">Evaluate domain value</string>
+    <string name="edit_re_evaluate">Re-evaluate</string>
+    <string name="edit_extended">Extended info</string>
+    <string name="edit_dns_provider">DNS provider</string>
+    <string name="edit_nameservers">Name servers</string>
+    <string name="edit_privacy">Whois privacy</string>
+    <string name="edit_note">Notes</string>
+    <string name="edit_error_domain">Please enter a domain name</string>
+    <string name="edit_error_full_domain">Please enter a full domain name</string>
+    <string name="edit_error_expire">Please select an expiry date</string>
+    <string name="edit_error_duplicate">This domain already exists</string>
+    <string name="edit_error_save">Save failed: %s</string>
+    <string name="edit_identifying_info">Identifying domain info…</string>
+    <string name="edit_fetching_price">Fetching prices…</string>
+    <string name="edit_rdap_failed">RDAP query failed: %s</string>
+    <string name="edit_price_failed">Price fetch failed: %s</string>
+    <string name="edit_rdap_filled">RDAP data auto-filled</string>
+    <string name="edit_prices_found">Found %1$d registrar prices (.%2$s)</string>
+    <string name="edit_rdap_ok">RDAP filled</string>
+    <string name="edit_n_prices">%d prices</string>
+    <string name="edit_query_done">Done</string>
+    <string name="edit_error_domain_or_tld">Please enter a domain or TLD first</string>
+    <string name="edit_price_register">Register</string>
+    <string name="edit_price_renew">Renew</string>
+    <string name="edit_price_transfer">Transfer</string>
+
+    <!-- Statistics -->
+    <string name="stats_title">Statistics</string>
+    <string name="stats_overview">Overview</string>
+    <string name="stats_total_domains">Total domains</string>
+    <string name="stats_total_renew_cost">Total renewal cost</string>
+    <string name="stats_total_hold_cost">Total holding cost</string>
+    <string name="stats_total_spent">Historical spending</string>
+    <string name="stats_total_value">Est. value (USD)</string>
+    <string name="stats_total_purchase">Total purchase cost</string>
+    <string name="stats_avg_renew">Avg. renewal price</string>
+    <string name="stats_expiring_30d">Expiring (30d)</string>
+    <string name="stats_renew_budget">Renewal budget</string>
+    <string name="stats_renew_7d">7-day renewal</string>
+    <string name="stats_renew_30d">30-day renewal</string>
+    <string name="stats_renew_90d">90-day renewal</string>
+    <string name="stats_renew_365d">Annual renewal</string>
+    <string name="stats_domains_count">%d domains</string>
+    <string name="stats_expiry_preview">Expiry preview</string>
+    <string name="stats_expire_7d">Expiring in 7 days</string>
+    <string name="stats_expire_30d">Expiring in 30 days</string>
+    <string name="stats_expire_90d">Expiring in 90 days</string>
+    <string name="stats_expire_365d">Expiring in 365 days</string>
+    <string name="stats_count">%d</string>
+    <string name="stats_registrar_dist">Registrar distribution</string>
+    <string name="stats_tld_dist">TLD distribution</string>
+
+    <!-- Whois -->
+    <string name="whois_title">Whois lookup (RDAP)</string>
+    <string name="whois_input">Enter domain</string>
+    <string name="whois_input_hint">e.g. example.com</string>
+    <string name="whois_query">Query (ICANN RDAP)</string>
+    <string name="whois_querying">Querying…</string>
+    <string name="whois_result">Results</string>
+    <string name="whois_source">Source: ICANN RDAP</string>
+    <string name="whois_reg_info">Registration info</string>
+    <string name="whois_registrar">Registrar</string>
+    <string name="whois_reg_date">Registration date</string>
+    <string name="whois_exp_date">Expiry date</string>
+    <string name="whois_last_changed">Last changed</string>
+    <string name="whois_dnssec">DNSSEC</string>
+    <string name="whois_dnssec_signed">Signed</string>
+    <string name="whois_dnssec_unsigned">Unsigned</string>
+    <string name="whois_status">Domain status</string>
+    <string name="whois_ns">Name servers</string>
+    <string name="whois_show_raw">Show raw RDAP data</string>
+    <string name="whois_hide_raw">Hide raw data</string>
+    <string name="whois_recent">Recent queries</string>
+    <string name="whois_success">Success</string>
+    <string name="whois_failed">Failed</string>
+    <string name="whois_unknown">Unknown</string>
+    <string name="whois_error_empty">Please enter a domain</string>
+    <string name="whois_error_query">Query failed: %s</string>
+
+    <!-- Tools -->
+    <string name="tools_title">Tools</string>
+    <string name="tools_query">Domain lookup</string>
+    <string name="tools_whois">Whois lookup</string>
+    <string name="tools_whois_desc">Query domain registration info (RDAP + WHOIS)</string>
+    <string name="tools_data">Data management</string>
+    <string name="tools_import">Import domains</string>
+    <string name="tools_import_desc">Bulk import from Excel / CSV</string>
+    <string name="tools_export">Export domains</string>
+    <string name="tools_export_desc">Export domain data to Excel / CSV</string>
+    <string name="tools_security">Security &amp; backup</string>
+    <string name="tools_backup">Backup &amp; restore</string>
+    <string name="tools_backup_desc">Local encrypted backup and restore</string>
+    <string name="tools_sync">Cloud sync</string>
+    <string name="tools_sync_desc">Sync encrypted data to the cloud</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_security">Security</string>
+    <string name="settings_change_password">Change password</string>
+    <string name="settings_biometric">Biometric unlock</string>
+    <string name="settings_biometric_desc">Use fingerprint or face to unlock</string>
+    <string name="settings_display">Display</string>
+    <string name="settings_dark_mode">Dark mode</string>
+    <string name="settings_currency">Default currency</string>
+    <string name="settings_other">Other</string>
+    <string name="settings_about">About</string>
+    <string name="settings_password_old">Current password</string>
+    <string name="settings_password_new">New password</string>
+    <string name="settings_password_confirm">Confirm new password</string>
+    <string name="settings_password_success">Password changed</string>
+    <string name="settings_password_wrong">Current password is incorrect</string>
+    <string name="settings_password_short">New password must be at least 6 characters</string>
+    <string name="settings_password_mismatch">Passwords do not match</string>
+
+    <!-- About -->
+    <string name="about_title">About</string>
+    <string name="about_description">Unmi is an Android local domain management system built with Kotlin + Jetpack Compose. It uses a local-first design with all data encrypted on device, and supports encrypted cloud backup.</string>
+    <string name="about_security_title">Security</string>
+    <string name="about_security_desc">• Password hashed with PBKDF2-SHA256\n• Encryption key derived from password\n• Sensitive fields encrypted with AES-256-GCM\n• Only ciphertext synced to cloud\n• Auto-lock on background</string>
+    <string name="about_license">License</string>
+    <string name="about_license_value">MIT License</string>
+    <string name="about_tech">Tech stack</string>
+    <string name="about_tech_value">Kotlin + Compose + Room + Hilt</string>
+    <string name="about_min_version">Min. Android version</string>
+    <string name="about_min_version_value">Android 8.0 (API 26)</string>
+    <string name="about_footer">Made with Kotlin &amp; Jetpack Compose</string>
+
+    <!-- Sort -->
+    <string name="sort_updated">Last updated</string>
+    <string name="sort_expire">Expiry date</string>
+    <string name="sort_name">Domain name</string>
+    <string name="sort_price">Renewal price</string>
+
+    <!-- Language -->
+    <string name="settings_language">Language</string>
+    <string name="settings_language_system">System default</string>
+    <string name="settings_language_zh">中文</string>
+    <string name="settings_language_en">English</string>
+
+    <!-- Common -->
+    <string name="action_back">Back</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_confirm">Confirm</string>
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_save">Save</string>
+    <string name="action_search">Search</string>
+    <string name="action_close">Close</string>
+    <string name="per_year">/yr</string>
+    <string name="version">v%s</string>
+</resources>
