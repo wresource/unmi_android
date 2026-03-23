@@ -1,9 +1,11 @@
 package io.unmi.app.ui.domain.edit
 
+import android.app.Application
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import io.unmi.app.R
 import io.unmi.app.data.local.db.entity.DomainEntity
 import io.unmi.app.data.network.DomainPrice
 import io.unmi.app.data.network.DomainValuationEngine
@@ -52,6 +54,7 @@ data class DomainEditUiState(
 
 @HiltViewModel
 class DomainEditViewModel @Inject constructor(
+    private val app: Application,
     savedStateHandle: SavedStateHandle,
     private val domainRepository: DomainRepository,
     private val rdapService: RdapService,
@@ -135,7 +138,7 @@ class DomainEditViewModel @Inject constructor(
     fun autoIdentify() {
         val domain = _uiState.value.domainName.trim()
         if (domain.isBlank() || !domain.contains(".")) {
-            _uiState.update { it.copy(queryMessage = "Please enter a full domain name") }
+            _uiState.update { it.copy(queryMessage = app.getString(R.string.edit_error_full_domain)) }
             return
         }
 
@@ -146,8 +149,8 @@ class DomainEditViewModel @Inject constructor(
                 it.copy(
                     isQuerying = true,
                     isFetchingPrice = true,
-                    queryMessage = "Identifying...",
-                    priceMessage = "Fetching prices..."
+                    queryMessage = app.getString(R.string.edit_identifying_info),
+                    priceMessage = app.getString(R.string.edit_fetching_price)
                 )
             }
 
@@ -157,7 +160,7 @@ class DomainEditViewModel @Inject constructor(
                     rdapService.queryDomain(domain)
                 } catch (e: Exception) {
                     _uiState.update {
-                        it.copy(isQuerying = false, queryMessage = "RDAP failed: ${e.message}")
+                        it.copy(isQuerying = false, queryMessage = app.getString(R.string.edit_rdap_failed, e.message ?: ""))
                     }
                     null
                 }
@@ -168,7 +171,7 @@ class DomainEditViewModel @Inject constructor(
                     nazhumiPriceService.getTldPrices(tld)
                 } catch (e: Exception) {
                     _uiState.update {
-                        it.copy(isFetchingPrice = false, priceMessage = "Price query failed: ${e.message}")
+                        it.copy(isFetchingPrice = false, priceMessage = app.getString(R.string.edit_price_failed, e.message ?: ""))
                     }
                     null
                 }
@@ -180,7 +183,7 @@ class DomainEditViewModel @Inject constructor(
                 _uiState.update { state ->
                     state.copy(
                         isQuerying = false,
-                        queryMessage = "RDAP data filled",
+                        queryMessage = app.getString(R.string.edit_rdap_filled),
                         registrar = rdapResult.registrar ?: state.registrar,
                         registerDate = rdapResult.registrationDate ?: state.registerDate,
                         expireDate = rdapResult.expirationDate ?: state.expireDate,
@@ -199,7 +202,7 @@ class DomainEditViewModel @Inject constructor(
                     it.copy(
                         isFetchingPrice = false,
                         priceList = priceResult.prices,
-                        priceMessage = "${priceResult.prices.size} prices (.${tld})"
+                        priceMessage = app.getString(R.string.edit_prices_found, priceResult.prices.size, tld)
                     )
                 }
             }
@@ -209,13 +212,13 @@ class DomainEditViewModel @Inject constructor(
 
             // Build final summary message
             val parts = mutableListOf<String>()
-            if (rdapResult != null) parts.add("RDAP OK")
+            if (rdapResult != null) parts.add(app.getString(R.string.edit_rdap_ok))
             if (priceResult != null && priceResult.prices.isNotEmpty()) {
-                parts.add("${priceResult.prices.size} prices")
+                parts.add(app.getString(R.string.edit_n_prices, priceResult.prices.size))
             }
             _uiState.update {
                 it.copy(
-                    queryMessage = if (parts.isNotEmpty()) parts.joinToString(" | ") else "Done",
+                    queryMessage = if (parts.isNotEmpty()) parts.joinToString(" | ") else app.getString(R.string.edit_query_done),
                     isQuerying = false,
                     isFetchingPrice = false
                 )
@@ -231,24 +234,24 @@ class DomainEditViewModel @Inject constructor(
             _uiState.value.domainName.substringAfterLast(".", "")
         }
         if (tld.isBlank()) {
-            _uiState.update { it.copy(priceMessage = "Please enter domain or TLD") }
+            _uiState.update { it.copy(priceMessage = app.getString(R.string.edit_error_domain_or_tld)) }
             return
         }
 
         viewModelScope.launch {
-            _uiState.update { it.copy(isFetchingPrice = true, priceMessage = "Fetching prices...") }
+            _uiState.update { it.copy(isFetchingPrice = true, priceMessage = app.getString(R.string.edit_fetching_price)) }
             try {
                 val priceInfo = nazhumiPriceService.getTldPrices(tld)
                 _uiState.update {
                     it.copy(
                         isFetchingPrice = false,
                         priceList = priceInfo.prices,
-                        priceMessage = "${priceInfo.prices.size} prices (.${tld})"
+                        priceMessage = app.getString(R.string.edit_prices_found, priceInfo.prices.size, tld)
                     )
                 }
             } catch (e: Exception) {
                 _uiState.update {
-                    it.copy(isFetchingPrice = false, priceMessage = "Price query failed: ${e.message}")
+                    it.copy(isFetchingPrice = false, priceMessage = app.getString(R.string.edit_price_failed, e.message ?: ""))
                 }
             }
         }
@@ -289,11 +292,11 @@ class DomainEditViewModel @Inject constructor(
         val state = _uiState.value
 
         if (state.domainName.isBlank()) {
-            _uiState.update { it.copy(error = "Please enter a domain") }
+            _uiState.update { it.copy(error = app.getString(R.string.edit_error_domain)) }
             return
         }
         if (state.expireDate.isBlank()) {
-            _uiState.update { it.copy(error = "Please select expiry date") }
+            _uiState.update { it.copy(error = app.getString(R.string.edit_error_expire)) }
             return
         }
 
@@ -351,8 +354,8 @@ class DomainEditViewModel @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        error = if (e.message?.contains("UNIQUE") == true) "Domain already exists"
-                            else "Save failed: ${e.message}"
+                        error = if (e.message?.contains("UNIQUE") == true) app.getString(R.string.edit_error_duplicate)
+                            else app.getString(R.string.edit_error_save, e.message ?: "")
                     )
                 }
             }
