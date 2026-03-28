@@ -259,6 +259,10 @@
     <string name="about_min_version_value">Android 8.0 (API 26)</string>
     <string name="about_footer">Made with Kotlin &amp; Jetpack Compose</string>
 
+    <!-- Account -->
+    <string name="settings_logout">退出登录</string>
+    <string name="settings_logout_confirm">确定要退出当前账户吗？</string>
+
     <!-- Sort -->
     <string name="sort_updated">更新时间</string>
     <string name="sort_expire">到期时间</string>
@@ -270,6 +274,14 @@
     <string name="settings_language_system">跟随系统</string>
     <string name="settings_language_zh">中文</string>
     <string name="settings_language_en">English</string>
+
+    <!-- Guest -->
+    <string name="auth_guest">游客模式</string>
+    <string name="auth_guest_desc">免密码体验，数据不加密</string>
+    <string name="settings_upgrade_account">设置密码</string>
+    <string name="settings_upgrade_desc">将游客账户升级为加密账户</string>
+    <string name="settings_upgrade_success">账户已升级</string>
+    <string name="settings_guest_label">游客</string>
 
     <!-- Common -->
     <string name="action_back">返回</string>

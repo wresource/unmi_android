@@ -27,4 +27,10 @@ interface AccountDao {
 
     @Delete
     suspend fun delete(account: AccountEntity)
+
+    @Query("SELECT * FROM accounts WHERE isGuest = 1 LIMIT 1")
+    suspend fun getGuestAccount(): AccountEntity?
+
+    @Query("SELECT * FROM accounts WHERE passwordHash = :hash AND isGuest = 0 LIMIT 1")
+    suspend fun getByPasswordHash(hash: String): AccountEntity?
 }

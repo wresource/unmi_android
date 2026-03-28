@@ -49,6 +49,9 @@ class AppPreferences @Inject constructor(
         val PASSWORD_HASH = stringPreferencesKey("password_hash")
         val PASSWORD_SALT = stringPreferencesKey("password_salt")
         val LANGUAGE = stringPreferencesKey("language")
+        val SESSION_ACCOUNT_ID = longPreferencesKey("session_account_id")
+        val SESSION_LOGIN_TIME = longPreferencesKey("session_login_time")
+        val SESSION_IS_GUEST = booleanPreferencesKey("session_is_guest")
     }
 
     val settingsFlow: Flow<AppSettings> = dataStore.data.map { prefs ->
@@ -132,5 +135,35 @@ class AppPreferences @Inject constructor(
             it[PASSWORD_HASH] = hash
             it[PASSWORD_SALT] = salt
         }
+    }
+
+    // Session persistence: keep user logged in for 30 days
+    suspend fun saveSession(accountId: Long, isGuest: Boolean) {
+        dataStore.edit {
+            it[SESSION_ACCOUNT_ID] = accountId
+            it[SESSION_LOGIN_TIME] = System.currentTimeMillis()
+            it[SESSION_IS_GUEST] = isGuest
+        }
+    }
+
+    suspend fun clearSession() {
+        dataStore.edit {
+            it.remove(SESSION_ACCOUNT_ID)
+            it.remove(SESSION_LOGIN_TIME)
+            it.remove(SESSION_IS_GUEST)
+        }
+    }
+
+    data class SessionInfo(
+        val accountId: Long,
+        val loginTime: Long,
+        val isGuest: Boolean
+    )
+
+    val sessionFlow: Flow<SessionInfo?> = dataStore.data.map { prefs ->
+        val id = prefs[SESSION_ACCOUNT_ID] ?: return@map null
+        val time = prefs[SESSION_LOGIN_TIME] ?: return@map null
+        val guest = prefs[SESSION_IS_GUEST] ?: false
+        SessionInfo(id, time, guest)
     }
 }

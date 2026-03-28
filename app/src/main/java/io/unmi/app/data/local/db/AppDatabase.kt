@@ -17,7 +17,7 @@ import io.unmi.app.data.local.db.entity.*
         DomainTagCrossRef::class,
         WhoisQueryLogEntity::class
     ],
-    version = 3,
+    version = 4,
     exportSchema = true
 )
 abstract class AppDatabase : RoomDatabase() {
@@ -36,6 +36,12 @@ abstract class AppDatabase : RoomDatabase() {
                 db.execSQL("ALTER TABLE domains ADD COLUMN valueGrade TEXT")
                 db.execSQL("ALTER TABLE domains ADD COLUMN valueConfidence TEXT")
                 db.execSQL("ALTER TABLE domains ADD COLUMN nameservers TEXT")
+            }
+        }
+
+        val MIGRATION_3_4 = object : Migration(3, 4) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE accounts ADD COLUMN isGuest INTEGER NOT NULL DEFAULT 0")
             }
         }
 

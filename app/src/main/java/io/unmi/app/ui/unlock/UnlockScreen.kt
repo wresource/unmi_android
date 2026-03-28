@@ -100,37 +100,44 @@ fun UnlockScreen(
                 )
             }
 
-            // Pager content
-            HorizontalPager(
-                state = pagerState,
-                modifier = Modifier.weight(1f)
-            ) { page ->
-                when (page) {
-                    0 -> LoginPage(uiState, viewModel)
-                    1 -> RegisterPage(uiState, viewModel)
+            if (uiState.isLoading) {
+                Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
+                    CircularProgressIndicator()
+                }
+            } else {
+                // Pager content
+                HorizontalPager(
+                    state = pagerState,
+                    modifier = Modifier.weight(1f)
+                ) { page ->
+                    when (page) {
+                        0 -> LoginPage(uiState, viewModel)
+                        1 -> RegisterPage(uiState, viewModel)
+                    }
                 }
             }
 
-            // Footer hint
-            Surface(
+            // Guest mode button
+            OutlinedButton(
+                onClick = { viewModel.loginAsGuest() },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 24.dp),
                 shape = MaterialTheme.shapes.medium,
-                color = MaterialTheme.colorScheme.surfaceContainerLow,
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 16.dp)
+                enabled = !uiState.isLoading
             ) {
-                Row(
-                    Modifier.padding(horizontal = 16.dp, vertical = 10.dp),
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    Icon(Icons.Outlined.Info, null, Modifier.size(14.dp),
-                        tint = MaterialTheme.colorScheme.onSurfaceVariant)
-                    Spacer(Modifier.width(8.dp))
-                    Text(
-                        stringResource(R.string.auth_password_hint),
-                        style = MaterialTheme.typography.labelSmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
-                    )
-                }
+                Icon(Icons.Outlined.PersonOutline, null, Modifier.size(18.dp))
+                Spacer(Modifier.width(8.dp))
+                Text(stringResource(R.string.auth_guest))
             }
+
+            // Footer hint
+            Text(
+                stringResource(R.string.auth_guest_desc),
+                style = MaterialTheme.typography.labelSmall,
+                color = MaterialTheme.colorScheme.outline,
+                modifier = Modifier.padding(top = 4.dp, bottom = 16.dp)
+            )
         }
     }
 }

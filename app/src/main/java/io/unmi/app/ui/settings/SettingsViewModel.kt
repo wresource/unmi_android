@@ -7,6 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import io.unmi.app.R
 import io.unmi.app.data.local.datastore.AppPreferences
 import io.unmi.app.data.local.datastore.AppSettings
+import io.unmi.app.data.local.db.dao.AccountDao
 import io.unmi.app.security.SecurityManager
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -16,7 +17,8 @@ import javax.inject.Inject
 class SettingsViewModel @Inject constructor(
     private val app: Application,
     private val appPreferences: AppPreferences,
-    private val securityManager: SecurityManager
+    private val securityManager: SecurityManager,
+    private val accountDao: AccountDao
 ) : ViewModel() {
 
     val settings: StateFlow<AppSettings> = appPreferences.settingsFlow.stateIn(
@@ -27,6 +29,8 @@ class SettingsViewModel @Inject constructor(
 
     private val _passwordChangeResult = MutableStateFlow<String?>(null)
     val passwordChangeResult: StateFlow<String?> = _passwordChangeResult.asStateFlow()
+
+    val isGuest: Boolean get() = securityManager.isGuest()
 
     fun toggleDarkMode(enabled: Boolean) {
         viewModelScope.launch { appPreferences.setDarkMode(enabled) }
@@ -66,6 +70,38 @@ class SettingsViewModel @Inject constructor(
         }
     }
 
+    /**
+     * Upgrade guest account to a full encrypted account.
+     */
+    fun upgradeGuestAccount(password: String, confirmPassword: String) {
+        if (password.length < 6) {
+            _passwordChangeResult.value = app.getString(R.string.settings_password_short)
+            return
+        }
+        if (password != confirmPassword) {
+            _passwordChangeResult.value = app.getString(R.string.settings_password_mismatch)
+            return
+        }
+
+        viewModelScope.launch {
+            val accountId = securityManager.getSessionAccountId() ?: return@launch
+            val account = accountDao.getById(accountId) ?: return@launch
+
+            val salt = securityManager.generateSalt()
+            val hash = securityManager.hashPassword(password, salt)
+
+            accountDao.update(account.copy(
+                passwordHash = hash,
+                passwordSalt = salt,
+                isGuest = false
+            ))
+
+            // Re-init session with encryption
+            securityManager.initSession(password, salt, accountId)
+            _passwordChangeResult.value = app.getString(R.string.settings_upgrade_success)
+        }
+    }
+
     fun clearPasswordChangeResult() {
         _passwordChangeResult.value = null
     }
@@ -84,5 +120,16 @@ class SettingsViewModel @Inject constructor(
 
     fun setLanguage(language: String) {
         viewModelScope.launch { appPreferences.setLanguage(language) }
+    }
+
+    private val _loggedOut = MutableStateFlow(false)
+    val loggedOut: StateFlow<Boolean> = _loggedOut.asStateFlow()
+
+    fun logout() {
+        viewModelScope.launch {
+            securityManager.clearSession()
+            appPreferences.clearSession()
+            _loggedOut.value = true
+        }
     }
 }

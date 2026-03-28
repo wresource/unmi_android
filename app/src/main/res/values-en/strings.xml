@@ -259,6 +259,10 @@
     <string name="about_min_version_value">Android 8.0 (API 26)</string>
     <string name="about_footer">Made with Kotlin &amp; Jetpack Compose</string>
 
+    <!-- Account -->
+    <string name="settings_logout">Log out</string>
+    <string name="settings_logout_confirm">Are you sure you want to log out?</string>
+
     <!-- Sort -->
     <string name="sort_updated">Last updated</string>
     <string name="sort_expire">Expiry date</string>
@@ -270,6 +274,14 @@
     <string name="settings_language_system">System default</string>
     <string name="settings_language_zh">中文</string>
     <string name="settings_language_en">English</string>
+
+    <!-- Guest -->
+    <string name="auth_guest">Guest mode</string>
+    <string name="auth_guest_desc">No password required, data not encrypted</string>
+    <string name="settings_upgrade_account">Set password</string>
+    <string name="settings_upgrade_desc">Upgrade guest to encrypted account</string>
+    <string name="settings_upgrade_success">Account upgraded</string>
+    <string name="settings_guest_label">Guest</string>
 
     <!-- Common -->
     <string name="action_back">Back</string>

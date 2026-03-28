@@ -70,12 +70,27 @@ class SecurityManager @Inject constructor() {
         currentAccountId = accountId
     }
 
+    /**
+     * Guest session - no encryption key, just account ID.
+     */
+    fun initGuestSession(accountId: Long) {
+        sessionKey = null
+        currentAccountId = accountId
+        isGuestSession = true
+    }
+
+    @Volatile
+    private var isGuestSession: Boolean = false
+
     fun clearSession() {
         sessionKey = null
         currentAccountId = null
+        isGuestSession = false
     }
 
     fun getSessionAccountId(): Long? = currentAccountId
+
+    fun isGuest(): Boolean = isGuestSession
 
     fun isSessionActive(): Boolean = sessionKey != null
 

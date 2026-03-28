@@ -32,8 +32,21 @@ fun SettingsScreen(
     val settings by viewModel.settings.collectAsStateWithLifecycle()
     val passwordChangeResult by viewModel.passwordChangeResult.collectAsStateWithLifecycle()
     var showPasswordDialog by remember { mutableStateOf(false) }
+    var showUpgradeDialog by remember { mutableStateOf(false) }
     var showLanguageDialog by remember { mutableStateOf(false) }
+    var showLogoutDialog by remember { mutableStateOf(false) }
+    val isGuest = viewModel.isGuest
+    val loggedOut by viewModel.loggedOut.collectAsStateWithLifecycle()
     val scrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
+
+    // Navigate to unlock screen on logout
+    LaunchedEffect(loggedOut) {
+        if (loggedOut) {
+            navController.navigate(AppRoute.Unlock.route) {
+                popUpTo(0) { inclusive = true }
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -56,12 +69,24 @@ fun SettingsScreen(
         ) {
             // Security section
             item { SectionHeader(stringResource(R.string.settings_security)) }
-            item {
-                SettingsItem(
-                    icon = Icons.Outlined.Lock,
-                    title = stringResource(R.string.settings_change_password),
-                    onClick = { showPasswordDialog = true }
-                )
+            if (isGuest) {
+                // Guest: show upgrade option
+                item {
+                    SettingsItem(
+                        icon = Icons.Outlined.LockOpen,
+                        title = stringResource(R.string.settings_upgrade_account),
+                        subtitle = stringResource(R.string.settings_upgrade_desc),
+                        onClick = { showUpgradeDialog = true }
+                    )
+                }
+            } else {
+                item {
+                    SettingsItem(
+                        icon = Icons.Outlined.Lock,
+                        title = stringResource(R.string.settings_change_password),
+                        onClick = { showPasswordDialog = true }
+                    )
+                }
             }
             item {
                 SettingsToggleItem(
@@ -118,6 +143,26 @@ fun SettingsScreen(
                     icon = Icons.Outlined.Info,
                     title = stringResource(R.string.settings_about),
                     onClick = { navController.navigate(AppRoute.About.route) }
+                )
+            }
+
+            // Logout
+            item {
+                HorizontalDivider(Modifier.padding(horizontal = 16.dp, vertical = 8.dp),
+                    color = MaterialTheme.colorScheme.outlineVariant)
+            }
+            item {
+                ListItem(
+                    headlineContent = {
+                        Text(
+                            stringResource(R.string.settings_logout),
+                            color = MaterialTheme.colorScheme.error
+                        )
+                    },
+                    leadingContent = {
+                        Icon(Icons.Outlined.Logout, null, tint = MaterialTheme.colorScheme.error)
+                    },
+                    modifier = Modifier.clickable { showLogoutDialog = true }
                 )
             }
 
@@ -214,6 +259,78 @@ fun SettingsScreen(
             },
             dismissButton = {
                 TextButton(onClick = { showPasswordDialog = false; viewModel.clearPasswordChangeResult() }) {
+                    Text(stringResource(R.string.action_cancel))
+                }
+            }
+        )
+    }
+
+    // Logout dialog
+    if (showLogoutDialog) {
+        AlertDialog(
+            onDismissRequest = { showLogoutDialog = false },
+            title = { Text(stringResource(R.string.settings_logout)) },
+            text = { Text(stringResource(R.string.settings_logout_confirm)) },
+            confirmButton = {
+                TextButton(onClick = { viewModel.logout() }) {
+                    Text(stringResource(R.string.action_confirm), color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showLogoutDialog = false }) {
+                    Text(stringResource(R.string.action_cancel))
+                }
+            }
+        )
+    }
+
+    // Upgrade guest dialog
+    if (showUpgradeDialog) {
+        var newPwd by remember { mutableStateOf("") }
+        var confirmPwd by remember { mutableStateOf("") }
+        val upgradeSuccessMsg = stringResource(R.string.settings_upgrade_success)
+
+        AlertDialog(
+            onDismissRequest = { showUpgradeDialog = false; viewModel.clearPasswordChangeResult() },
+            title = { Text(stringResource(R.string.settings_upgrade_account)) },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text(
+                        stringResource(R.string.settings_upgrade_desc),
+                        style = MaterialTheme.typography.bodySmall,
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
+                    OutlinedTextField(
+                        value = newPwd, onValueChange = { newPwd = it },
+                        label = { Text(stringResource(R.string.auth_set_password)) },
+                        singleLine = true, visualTransformation = PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium
+                    )
+                    OutlinedTextField(
+                        value = confirmPwd, onValueChange = { confirmPwd = it },
+                        label = { Text(stringResource(R.string.auth_confirm_password)) },
+                        singleLine = true, visualTransformation = PasswordVisualTransformation(),
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                        modifier = Modifier.fillMaxWidth(), shape = MaterialTheme.shapes.medium
+                    )
+                    if (passwordChangeResult != null) {
+                        Text(
+                            passwordChangeResult!!,
+                            color = if (passwordChangeResult == upgradeSuccessMsg) SafeGreen
+                                    else MaterialTheme.colorScheme.error,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                TextButton(onClick = { viewModel.upgradeGuestAccount(newPwd, confirmPwd) }) {
+                    Text(stringResource(R.string.action_confirm))
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showUpgradeDialog = false; viewModel.clearPasswordChangeResult() }) {
                     Text(stringResource(R.string.action_cancel))
                 }
             }

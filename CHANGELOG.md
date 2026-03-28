@@ -1,5 +1,17 @@
 # Changelog
 
+## v1.0.5
+
+<en-US>
+Added guest mode, 30-day login cache, and logout option. Built-in review account for Google Play. Fixed startup flicker and database migration crashes. Improved Settings alignment and i18n coverage.
+</en-US>
+
+<zh-CN>
+新增游客模式、30天登录缓存和退出登录功能。内置 Google Play 审查账号。修复启动闪烁和数据库迁移闪退。优化设置页对齐和多语言覆盖。
+</zh-CN>
+
+---
+
 ## v1.0.2
 
 ### 中文
