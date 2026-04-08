@@ -259,6 +259,13 @@
     <string name="about_min_version_value">Android 8.0 (API 26)</string>
     <string name="about_footer">Made with Kotlin &amp; Jetpack Compose</string>
 
+    <!-- Biometric -->
+    <string name="biometric_title">生物识别验证</string>
+    <string name="biometric_subtitle">使用指纹或面部解锁 Unmi</string>
+    <string name="biometric_cancel">使用密码</string>
+    <string name="biometric_not_available">设备不支持生物识别</string>
+    <string name="biometric_not_enrolled">请先在系统设置中录入指纹或面部</string>
+
     <!-- Account -->
     <string name="settings_logout">退出登录</string>
     <string name="settings_logout_confirm">确定要退出当前账户吗？</string>

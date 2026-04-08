@@ -10,6 +10,7 @@ import io.unmi.app.data.local.db.dao.AccountDao
 import io.unmi.app.data.local.db.dao.DomainDao
 import io.unmi.app.data.local.db.entity.AccountEntity
 import io.unmi.app.data.local.db.entity.DomainEntity
+import io.unmi.app.security.BiometricHelper
 import io.unmi.app.security.SecurityManager
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
@@ -24,6 +25,9 @@ data class UnlockUiState(
     val isUnlocked: Boolean = false,
     val failedAttempts: Int = 0,
     val hasAccounts: Boolean = false,
+    val biometricAvailable: Boolean = false,
+    val biometricEnabled: Boolean = false,
+    val showBiometricPrompt: Boolean = false,
     val createDisplayName: String = "",
     val createPassword: String = "",
     val createConfirmPassword: String = ""
@@ -51,7 +55,26 @@ class UnlockViewModel @Inject constructor(
         viewModelScope.launch {
             ensureReviewAccount()
             val count = accountDao.getCount()
-            _uiState.update { it.copy(isLoading = false, hasAccounts = count > 0) }
+            val biometricAvail = BiometricHelper.isAvailable(app)
+            val settings = appPreferences.settingsFlow.first()
+            val biometricOn = settings.biometricEnabled && biometricAvail
+
+            // Check if there's a saved session for biometric unlock
+            val session = appPreferences.sessionFlow.first()
+            val hasValidSession = session != null &&
+                (System.currentTimeMillis() - session.loginTime) < SESSION_VALIDITY_MS &&
+                accountDao.getById(session.accountId) != null
+
+            _uiState.update {
+                it.copy(
+                    isLoading = false,
+                    hasAccounts = count > 0,
+                    biometricAvailable = biometricAvail,
+                    biometricEnabled = biometricOn,
+                    // Auto-trigger biometric if enabled and has valid session
+                    showBiometricPrompt = biometricOn && hasValidSession
+                )
+            }
         }
     }
 
@@ -80,6 +103,29 @@ class UnlockViewModel @Inject constructor(
             // Insert demo domains for the review account
             insertDemoDomains(accountId)
         }
+    }
+
+    /**
+     * Called when biometric authentication succeeds.
+     * Restores the last saved session.
+     */
+    fun onBiometricSuccess() {
+        viewModelScope.launch {
+            val session = appPreferences.sessionFlow.first() ?: return@launch
+            val account = accountDao.getById(session.accountId) ?: return@launch
+
+            if (session.isGuest) {
+                securityManager.initGuestSession(account.id)
+            } else {
+                securityManager.initGuestSession(account.id)
+            }
+            appPreferences.saveSession(account.id, session.isGuest)
+            _uiState.update { it.copy(isUnlocked = true) }
+        }
+    }
+
+    fun dismissBiometricPrompt() {
+        _uiState.update { it.copy(showBiometricPrompt = false) }
     }
 
     fun login(password: String) {

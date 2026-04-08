@@ -259,6 +259,13 @@
     <string name="about_min_version_value">Android 8.0 (API 26)</string>
     <string name="about_footer">Made with Kotlin &amp; Jetpack Compose</string>
 
+    <!-- Biometric -->
+    <string name="biometric_title">Biometric verification</string>
+    <string name="biometric_subtitle">Use fingerprint or face to unlock Unmi</string>
+    <string name="biometric_cancel">Use password</string>
+    <string name="biometric_not_available">Biometric not supported on this device</string>
+    <string name="biometric_not_enrolled">Please enroll fingerprint or face in system settings first</string>
+
     <!-- Account -->
     <string name="settings_logout">Log out</string>
     <string name="settings_logout_confirm">Are you sure you want to log out?</string>

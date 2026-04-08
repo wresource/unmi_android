@@ -18,11 +18,14 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.fragment.app.FragmentActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import io.unmi.app.R
+import io.unmi.app.security.BiometricHelper
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,9 +40,25 @@ fun UnlockScreen(
         pageCount = { 2 }
     )
     val scope = rememberCoroutineScope()
+    val context = LocalContext.current
 
     LaunchedEffect(uiState.isUnlocked) {
         if (uiState.isUnlocked) onUnlocked()
+    }
+
+    // Auto-trigger biometric prompt
+    LaunchedEffect(uiState.showBiometricPrompt) {
+        if (uiState.showBiometricPrompt) {
+            val activity = context as? FragmentActivity ?: return@LaunchedEffect
+            BiometricHelper.authenticate(
+                activity = activity,
+                title = context.getString(R.string.biometric_title),
+                subtitle = context.getString(R.string.biometric_subtitle),
+                negativeButtonText = context.getString(R.string.biometric_cancel),
+                onSuccess = { viewModel.onBiometricSuccess() },
+                onError = { viewModel.dismissBiometricPrompt() }
+            )
+        }
     }
 
     Surface(
@@ -178,16 +197,42 @@ private fun LoginPage(uiState: UnlockUiState, viewModel: UnlockViewModel) {
             Text(uiState.error!!, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
         }
 
-        Button(
-            onClick = { viewModel.login(password) },
-            modifier = Modifier.fillMaxWidth().height(48.dp),
-            enabled = password.isNotBlank() && !uiState.isLoading && uiState.failedAttempts < 5,
-            shape = MaterialTheme.shapes.medium
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            if (uiState.isLoading) {
-                CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp, color = MaterialTheme.colorScheme.onPrimary)
-            } else {
-                Text(stringResource(R.string.auth_login))
+            Button(
+                onClick = { viewModel.login(password) },
+                modifier = Modifier.weight(1f).height(48.dp),
+                enabled = password.isNotBlank() && !uiState.isLoading && uiState.failedAttempts < 5,
+                shape = MaterialTheme.shapes.medium
+            ) {
+                if (uiState.isLoading) {
+                    CircularProgressIndicator(Modifier.size(20.dp), strokeWidth = 2.dp, color = MaterialTheme.colorScheme.onPrimary)
+                } else {
+                    Text(stringResource(R.string.auth_login))
+                }
+            }
+
+            // Biometric button
+            if (uiState.biometricEnabled) {
+                val context = LocalContext.current
+                FilledTonalIconButton(
+                    onClick = {
+                        val activity = context as? FragmentActivity ?: return@FilledTonalIconButton
+                        BiometricHelper.authenticate(
+                            activity = activity,
+                            title = context.getString(R.string.biometric_title),
+                            subtitle = context.getString(R.string.biometric_subtitle),
+                            negativeButtonText = context.getString(R.string.biometric_cancel),
+                            onSuccess = { viewModel.onBiometricSuccess() },
+                            onError = { }
+                        )
+                    },
+                    modifier = Modifier.size(48.dp)
+                ) {
+                    Icon(Icons.Outlined.Fingerprint, contentDescription = null)
+                }
             }
         }
     }

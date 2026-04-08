@@ -28,26 +28,50 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
 
-        // Hilt injects AFTER super.onCreate(), so now it's safe to use
+        // Read settings synchronously BEFORE setContent to avoid flicker
+        val initialSettings = runBlocking { appPreferences.settingsFlow.first() }
+
+        // Apply locale ONCE synchronously — this prevents the infinite recreation loop.
+        // setApplicationLocales() recreates the Activity if locale differs from current.
+        // By comparing with the current locale first, we only recreate when truly needed.
+        applyLocaleIfChanged(initialSettings.language)
+
         val startRoute = runBlocking { resolveStartRoute() }
 
+        enableEdgeToEdge()
         setContent {
-            val settings by appPreferences.settingsFlow.collectAsState(initial = AppSettings())
+            val settings by appPreferences.settingsFlow.collectAsState(initial = initialSettings)
 
+            // Track which language we've already applied to avoid re-triggering
+            var appliedLanguage by remember { mutableStateOf(initialSettings.language) }
             LaunchedEffect(settings.language) {
-                val locales = when (settings.language) {
-                    "zh" -> LocaleListCompat.forLanguageTags("zh")
-                    "en" -> LocaleListCompat.forLanguageTags("en")
-                    else -> LocaleListCompat.getEmptyLocaleList()
+                if (settings.language != appliedLanguage) {
+                    appliedLanguage = settings.language
+                    // This will recreate Activity — no further code runs after this
+                    applyLocaleIfChanged(settings.language)
                 }
-                AppCompatDelegate.setApplicationLocales(locales)
             }
 
             UnmiTheme(darkTheme = settings.darkMode) {
                 AppNavigation(startDestination = startRoute)
             }
+        }
+    }
+
+    /**
+     * Only call setApplicationLocales if the desired locale is different from current.
+     * This prevents the infinite Activity recreation loop.
+     */
+    private fun applyLocaleIfChanged(language: String) {
+        val desired = when (language) {
+            "zh" -> LocaleListCompat.forLanguageTags("zh")
+            "en" -> LocaleListCompat.forLanguageTags("en")
+            else -> LocaleListCompat.getEmptyLocaleList()
+        }
+        val current = AppCompatDelegate.getApplicationLocales()
+        if (current != desired) {
+            AppCompatDelegate.setApplicationLocales(desired)
         }
     }
 
@@ -67,7 +91,6 @@ class MainActivity : AppCompatActivity() {
             return AppRoute.Unlock.route
         }
 
-        // Restore session
         if (session.isGuest) {
             securityManager.initGuestSession(account.id)
         } else {

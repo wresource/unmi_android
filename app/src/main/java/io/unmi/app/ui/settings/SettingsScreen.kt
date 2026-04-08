@@ -12,6 +12,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
@@ -20,6 +21,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import io.unmi.app.R
+import io.unmi.app.security.BiometricHelper
 import io.unmi.app.ui.navigation.AppRoute
 import io.unmi.app.ui.theme.SafeGreen
 
@@ -89,12 +91,22 @@ fun SettingsScreen(
                 }
             }
             item {
+                val context = LocalContext.current
+                val biometricAvailable = remember { BiometricHelper.isAvailable(context) }
+                val biometricHasHardware = remember { BiometricHelper.hasHardware(context) }
                 SettingsToggleItem(
                     icon = Icons.Outlined.Fingerprint,
                     title = stringResource(R.string.settings_biometric),
-                    subtitle = stringResource(R.string.settings_biometric_desc),
-                    checked = settings.biometricEnabled,
-                    onCheckedChange = { viewModel.toggleBiometric(it) }
+                    subtitle = when {
+                        !biometricHasHardware -> stringResource(R.string.biometric_not_available)
+                        !biometricAvailable -> stringResource(R.string.biometric_not_enrolled)
+                        else -> stringResource(R.string.settings_biometric_desc)
+                    },
+                    checked = settings.biometricEnabled && biometricAvailable,
+                    onCheckedChange = { enabled ->
+                        if (enabled && !biometricAvailable) return@SettingsToggleItem
+                        viewModel.toggleBiometric(enabled)
+                    }
                 )
             }
 
